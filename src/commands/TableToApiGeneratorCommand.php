@@ -45,6 +45,8 @@ class TableToApiGeneratorCommand extends Command
                 File::makeDirectory($folderPath, $mode = 0777, true, true);
             }
         }
+        $this->generateModel($this->apiPath,$tableName,$tableName);
+        $this->generateController($this->apiPath, Str::studly($tableName));
     }
 
     /**
@@ -62,4 +64,76 @@ class TableToApiGeneratorCommand extends Command
 	{
 		return file_get_contents(base_path('vendor/asif/table-to-api/src/stubs/'. $stubName.'.stub'));
 	}
+
+	/**
+     * This method is used to generate model stub
+     * using selected table schemas
+     */
+	private function generateModel($apiPath,$modelName,$tableName)
+    {
+        $modelClassName = Str::studly(Str::singular(ucfirst($modelName)));
+        $modelTemplate = str_replace(
+            [
+                '{ApiPath}',
+                '{ModelClassName}',
+                '{TableName}',
+                '{TableColumnsArray}'
+            ],
+            [
+                str_replace('/', '\\', $this->generateFQNS($apiPath)),
+                $modelClassName,
+                $tableName,
+                $this->generateModelFillable($tableName)
+
+            ],
+            $this->getStub('Model')
+        );
+
+        file_put_contents($apiPath . '/Models/' . $modelClassName . '.php', $modelTemplate);
+    }
+
+    private function generateFQNS($namespace)
+    {
+        $namespaceArray=explode("/","api/v1");
+        $mapped=array_map(function($data){
+            return Str::studly($data);
+        }, $namespaceArray);
+
+        return implode("/",$mapped);
+    }
+
+    private function generateModelFillable($tableName)
+    {
+        $columnsArray=Schema::getColumnListing($tableName);
+        $mapped=array_map(function($data){
+            return "'".$data."'";
+        },$columnsArray);
+        $fillable=implode(",",$mapped);
+        return $fillable;
+    }
+
+    public function generateController($apiPath, $modelName)
+    {
+
+        $controllerStub = $this->getStub('Controller');
+        $controllerTemplate = str_replace(
+            [
+                '{ApiPath}',
+                '{ApiClass}',
+                '{ApiVariablePlural}',
+                '{ModelName}',
+                '{ApiVariableSingular}',
+            ],
+            [
+                str_replace('/', '\\', $apiPath),
+                $modelName,
+                Str::plural(strtolower($modelName)),
+                Str::singular($modelName),
+                Str::singular(strtolower($modelName)),
+            ],
+            $controllerStub
+        );
+
+        file_put_contents($apiPath . '/Controllers/' . $modelName . 'Controller.php', $controllerTemplate);
+    }
 }

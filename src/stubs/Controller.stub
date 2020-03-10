@@ -1,0 +1,144 @@
+<?php
+
+namespace {ApiPath}\Controllers;
+
+use Illuminate\Http\Request;
+use Response;
+use Illuminate\Http\Response as Res;
+use {ApiPath}\Requests\{ApiClass}Request;
+use {ApiPath}\Models\{ModelName};
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+class {ApiClass}Controller extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $data = [];
+        $data['{ApiVariablePlural}'] = {ModelName}::all();
+        return Response::json($data,Res::HTTP_OK);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store({ApiClass}Request $request)
+    {
+        try{
+            ${ApiVariableSingular} = new {ModelName}();
+            $data = $request->only(${ApiVariableSingular}->getFillable());
+            ${ApiVariableSingular}->fill($data)->save();
+            return Response::json($data,Res::HTTP_CREATED);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry, Operation Failed',Res::HTTP_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        try
+        {
+            $data['{ApiVariableSingular}'] = {ModelName}::findOrFail($id);
+            return Response::json($data,Res::HTTP_OK);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry the data is not found',Res::HTTP_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        try
+        {
+            $data['{ApiVariableSingular}'] = {ModelName}::findOrFail($id);
+            return Response::json($data,Res::HTTP_OK);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry the data is not found',Res::HTTP_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update({ApiClass}Request $request, $id)
+    {
+        try
+        {
+            ${ApiVariableSingular} = {ModelName}::findOrFail($id);
+            $data = $request->only(${ModelName}->getFillable());
+            ${ModelName}->update($data);
+            return Response::json($data,Res::HTTP_CREATED);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry, Operation Failed',Res::HTTP_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try
+        {
+            ${ApiVariableSingular} = {ModelName}::findOrFail($id);
+            if(${ApiVariableSingular}->delete()){
+                return Response::json([
+                    'message' => 'Succefully Deleted',
+                    'status' => true
+                ],Res::HTTP_OK);
+            }else{
+                return Response::json([
+                    'message' => "Cannot be deleted",
+                    'status' => false
+                ],Res::HTTP_NOT_FOUND );
+            }
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry, Operation Failed',Res::HTTP_NOT_FOUND);
+        }
+    }
+}
