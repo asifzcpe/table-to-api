@@ -1,0 +1,12 @@
+{
+    "name": "asif/table-to-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "asifzcpe",
+            "email": "rahmanasif05004@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
