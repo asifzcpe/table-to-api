@@ -76,12 +76,14 @@ class TableToApiGeneratorCommand extends Command
         $modelTemplate = str_replace(
             [
                 '{ApiPath}',
+                '{FolderName}',
                 '{ModelClassName}',
                 '{TableName}',
                 '{TableColumnsArray}'
             ],
             [
                 str_replace('/', '\\', $this->generateFQNS($apiPath)),
+                Str::plural(Str::studly($modelName)),
                 $modelClassName,
                 $tableName,
                 $this->generateModelFillable($tableName)
@@ -120,6 +122,7 @@ class TableToApiGeneratorCommand extends Command
         $controllerTemplate = str_replace(
             [
                 '{ApiPath}',
+                '{FolderName}',
                 '{ApiClass}',
                 '{ApiVariablePlural}',
                 '{ModelName}',
@@ -127,7 +130,8 @@ class TableToApiGeneratorCommand extends Command
             ],
             [
                 str_replace('/', '\\', $this->generateFQNS($apiPath)),
-                $modelName,
+                Str::plural(Str::studly($modelName)),
+                Str::singular($modelName),
                 Str::plural(strtolower($modelName)),
                 Str::singular($modelName),
                 Str::singular(strtolower($modelName)),
@@ -135,7 +139,7 @@ class TableToApiGeneratorCommand extends Command
             $controllerStub
         );
 
-        file_put_contents($apiPath . '/Controllers/' . $modelName . 'Controller.php', $controllerTemplate);
+        file_put_contents($apiPath . '/Controllers/' . Str::singular($modelName) . 'Controller.php', $controllerTemplate);
     }
 
     public function generateRequest($apiPath, $modelName)
@@ -144,11 +148,13 @@ class TableToApiGeneratorCommand extends Command
         $formRequestTemplate = str_replace(
             [
                 '{ApiClass}',
-                '{ApiPath}'
+                '{ApiPath}',
+                '{FolderName}'
             ],
             [
                 $apiClass,
                 str_replace('/', '\\', $this->generateFQNS($apiPath)),
+                Str::studly($modelName)
             ],
             $this->getStub('Request')
         );

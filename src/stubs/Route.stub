@@ -1,0 +1,8 @@
+<?php
+
+Route::prefix('{ApiPrefix}')
+->namespace('{ApiNamespace}\{ModelName}\Controllers')
+->middleware([])
+->group(function () {
+    Route::resource('{ResourceRoute}','{ModelName}Controller');
+});

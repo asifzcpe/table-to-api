@@ -1,6 +1,6 @@
 <?php
 
-namespace {ApiPath}\Models;
+namespace {ApiPath}\{FolderName}\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class {ModelClassName} extends Model

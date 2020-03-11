@@ -1,6 +1,6 @@
 <?php
 
-namespace {ApiPath}\Requests;
+namespace {ApiPath}\{FolderName}\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
