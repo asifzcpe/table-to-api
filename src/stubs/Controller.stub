@@ -103,8 +103,8 @@ class {ApiClass}Controller extends Controller
         try
         {
             ${ApiVariableSingular} = {ModelName}::findOrFail($id);
-            $data = $request->only(${ModelName}->getFillable());
-            ${ModelName}->update($data);
+            $data = $request->only(${ApiVariableSingular}->getFillable());
+            ${ApiVariableSingular}->update($data);
             return Response::json($data,Res::HTTP_CREATED);
         }
         catch(ModelNotFoundException $e)

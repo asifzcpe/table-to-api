@@ -47,6 +47,7 @@ class TableToApiGeneratorCommand extends Command
         }
         $this->generateModel($this->apiPath,$tableName,$tableName);
         $this->generateController($this->apiPath, Str::studly($tableName));
+        $this->generateRequest($this->apiPath,Str::studly($tableName));
     }
 
     /**
@@ -125,7 +126,7 @@ class TableToApiGeneratorCommand extends Command
                 '{ApiVariableSingular}',
             ],
             [
-                str_replace('/', '\\', $apiPath),
+                str_replace('/', '\\', $this->generateFQNS($apiPath)),
                 $modelName,
                 Str::plural(strtolower($modelName)),
                 Str::singular($modelName),
@@ -135,5 +136,23 @@ class TableToApiGeneratorCommand extends Command
         );
 
         file_put_contents($apiPath . '/Controllers/' . $modelName . 'Controller.php', $controllerTemplate);
+    }
+
+    public function generateRequest($apiPath, $modelName)
+    {
+        $apiClass = Str::singular(ucfirst($modelName));
+        $formRequestTemplate = str_replace(
+            [
+                '{ApiClass}',
+                '{ApiPath}'
+            ],
+            [
+                $apiClass,
+                str_replace('/', '\\', $this->generateFQNS($apiPath)),
+            ],
+            $this->getStub('Request')
+        );
+
+        file_put_contents($apiPath . '/Requests/' . $apiClass . 'Request.php', $formRequestTemplate);
     }
 }
