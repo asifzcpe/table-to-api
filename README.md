@@ -10,7 +10,13 @@ The recommended way to install table-to-api is through
 composer require asifzcpe/table-to-api
 ```
 # Setting up the package in laravel project
-#1 Inserting api namespace in composer.json file like the following:
+1. Run following artisan command shipped with this package
+```bash
+php artisan table2api:generate YOUR_TABLE_NAME
+```
+if table exists in database it generates following scaffolding:
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+2. Inserting api namespace in composer.json file like the following:
 ```json
  "psr-4": {
      "App\\": "app/",
