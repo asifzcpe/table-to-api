@@ -48,6 +48,7 @@ class TableToApiGeneratorCommand extends Command
         $this->generateModel($this->apiPath,$tableName,$tableName);
         $this->generateController($this->apiPath, Str::studly($tableName));
         $this->generateRequest($this->apiPath,Str::studly($tableName));
+        $this->generateApiRoute($this->apiPath,Str::studly($tableName));
     }
 
     /**
@@ -160,5 +161,29 @@ class TableToApiGeneratorCommand extends Command
         );
 
         file_put_contents($apiPath . '/Requests/' . $apiClass . 'Request.php', $formRequestTemplate);
+    }
+
+    public function generateApiRoute($apiPath,$modelName)
+    {
+        $routeTemplate = str_replace(
+            [
+                '{ApiPrefix}',
+                '{ApiNamespace}',
+                '{ModelName}',
+                '{ResourceRoute}',
+                '{ControllerClass}'
+
+            ],
+            [
+                "api/v1/",
+                str_replace('/', '\\', $this->generateFQNS($apiPath)),
+                Str::studly($modelName),
+                Str::kebab(Str::plural($modelName)),
+                Str::singular(Str::studly($modelName)),
+            ],
+            $this->getStub('Route')
+        );
+
+        file_put_contents($apiPath . '/Routes/api.php', $routeTemplate);
     }
 }
