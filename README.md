@@ -15,7 +15,7 @@ composer require asifzcpe/table-to-api
 php artisan table2api:generate YOUR_TABLE_NAME
 ```
 if table exists in database it generates following scaffolding:
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of Yaktocat](https://raw.githubusercontent.com/asifzcpe/table-to-api/master/docs/Screenshot%20from%202020-03-13%2000-26-21.png)
 2. Inserting api namespace in composer.json file like the following:
 ```json
  "psr-4": {
