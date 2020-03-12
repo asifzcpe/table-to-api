@@ -25,3 +25,17 @@ if table exists in database it generates following scaffolding:
      "Api\\V1\\":"api/1/"
   },
 ```
+3. Run following command to autoload
+```bash
+composer dumpautoload
+```
+```bash
+php artisan clear:cache
+php artisan clear-compiled
+```
+4. Run following command to see generated api routes
+```bash
+  php artisan route:list
+```
+and it will show like this (users table in my case)
+[!Image of route lists](https://raw.githubusercontent.com/asifzcpe/table-to-api/master/docs/Screenshot%20from%202020-03-13%2000-49-09.png)
