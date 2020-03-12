@@ -38,4 +38,4 @@ php artisan clear-compiled
   php artisan route:list
 ```
 and it will show like this (users table in my case)
-[!Image of route lists](https://raw.githubusercontent.com/asifzcpe/table-to-api/master/docs/Screenshot%20from%202020-03-13%2000-49-09.png)
+![Image of route lists](https://raw.githubusercontent.com/asifzcpe/table-to-api/master/docs/Screenshot%20from%202020-03-13%2000-49-09.png)
