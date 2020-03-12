@@ -39,3 +39,5 @@ php artisan clear-compiled
 ```
 and it will show like this (users table in my case)
 ![Image of route lists](https://raw.githubusercontent.com/asifzcpe/table-to-api/master/docs/Screenshot%20from%202020-03-13%2000-49-09.png)
+
+### It is done. Now, you can hit the urls to get json data as rest api
