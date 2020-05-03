@@ -22,7 +22,7 @@ if table exists in database it generates following scaffolding:
 ```json
  "psr-4": {
      "App\\": "app/",
-     "Api\\V1\\":"api/1/"
+     "Api\\V1\\":"api/v1/"
   },
 ```
 3. Run following command to autoload
