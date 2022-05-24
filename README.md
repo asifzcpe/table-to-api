@@ -30,7 +30,7 @@ if table exists in database it generates following scaffolding:
 composer dumpautoload
 ```
 ```bash
-php artisan clear:cache
+php artisan cache:clear
 php artisan clear-compiled
 ```
 4. Run following command to see generated api routes
