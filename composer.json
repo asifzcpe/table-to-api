@@ -15,7 +15,7 @@
             "email": "rahmanasif05004@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "Asif\\TableToApi\\":"src"
