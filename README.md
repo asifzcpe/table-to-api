@@ -7,7 +7,7 @@ The recommended way to install table-to-api is through
 [Composer](https://getcomposer.org/).
 
 ```bash
-composer require asifzcpe/table-to-api
+composer require asif/table-to-api
 ```
 # Setting up the package in laravel project
 1. Run following artisan command shipped with this package
