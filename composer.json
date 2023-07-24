@@ -18,7 +18,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Asif\\TableToApi\\":"src"
+            "Asif\\TableToApi\\":"vendor/asif/table-to-api/src/"
         }
     },
     "extra":{
